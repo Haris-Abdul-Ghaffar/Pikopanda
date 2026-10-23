@@ -8,13 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
-   
 </head>
 <body>
     <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">PikoPanda 🐼</a>
-            <a href="shop.html" style="text-decoration:none;color:var(--color-cta);font-weight:600;"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+            <a href="index.html" class="logo">
+                <img src="assets/logo.jpg" alt="PikoPanda" style="height: 50px;">
+                <span>PikoPanda </span>
+            </a>
+            <a href="shop.html" style="text-decoration:none;color:var(--color-cta);font-weight:600;">
+                <i class="fas fa-arrow-left"></i> Back to Shop
+            </a>
         </div>
     </header>
 
@@ -59,38 +63,18 @@
                 <div class="tabs-header">
                     <button class="tab-btn active" onclick="switchTab('details', event)">Details & Care</button>
                     <button class="tab-btn" onclick="switchTab('shipping', event)">Delivery & Returns</button>
-                    <button class="tab-btn" onclick="switchTab('howto', event)">How to Order</button>
                 </div>
                 
                 <div class="tab-content active" id="tab-details">
                     <p id="productDescription"></p>
                     <h3 style="margin:20px 0 12px;">Product Details</h3>
                     <ul id="productDetails"></ul>
-                    <h3 style="margin:20px 0 12px;">Care Instructions</h3>
-                    <ul>
-                        <li>Machine wash cold with similar colours</li>
-                        <li>Do not bleach</li>
-                        <li>Line dry in shade</li>
-                        <li>Iron on low if needed</li>
-                    </ul>
                 </div>
                 
                 <div class="tab-content" id="tab-shipping">
                     <h3>Delivery</h3>
                     <p>We deliver across Pakistan. Most orders arrive within <strong>3-5 business days</strong> after confirmation.</p>
                     <p>Delivery charges depend on your city and are confirmed with you on WhatsApp before your order is placed.</p>
-                    <h3 style="margin:20px 0 12px;">Returns & Exchanges</h3>
-                    <p>If something isn't right, message us on WhatsApp within 7 days of delivery and we'll help sort it out.</p>
-                    <p><strong>Note:</strong> Orders are fulfilled by our sourcing partner, Markaz, and their supplier network.</p>
-                </div>
-                
-                <div class="tab-content" id="tab-howto">
-                    <h3>Ordering in 3 Easy Steps</h3>
-                    <ol style="margin-left:20px;line-height:2;">
-                        <li><strong>Pick your favourite</strong> — Browse and note the SKU</li>
-                        <li><strong>Send us a WhatsApp</strong> — One tap pre-fills your order</li>
-                        <li><strong>We handle the rest</strong> — We confirm, pack and ship. Cash on delivery.</li>
-                    </ol>
                 </div>
             </div>
         </div>
@@ -149,8 +133,6 @@
             const detailsList = document.getElementById('productDetails');
             if (currentProduct.details) {
                 detailsList.innerHTML = Object.entries(currentProduct.details).map(([k,v]) => `<li><strong>${k.charAt(0).toUpperCase()+k.slice(1)}:</strong> ${v}</li>`).join('');
-            } else {
-                detailsList.innerHTML = '<li>Premium quality fabric</li><li>Comfortable fit for active play</li>';
             }
             
             const sizeContainer = document.getElementById('sizeOptions');
@@ -178,7 +160,7 @@
             event.preventDefault();
             if (!currentProduct) return;
             const size = selectedSize || 'I need help choosing';
-            const msg = `Hi PikoPanda! 🐼\n\nI'd like to order:\n🛍️ ${currentProduct.name}\n🏷️ SKU: ${currentProduct.sku}\n📏 Size: ${size}\n💰 Price: ${CFG.currency} ${currentProduct.price}\n\nPlease confirm availability and delivery charges.`;
+            const msg = `Hi PikoPanda! \n\nI'd like to order:\n🛍️ ${currentProduct.name}\n🏷️ SKU: ${currentProduct.sku}\n📏 Size: ${size}\n💰 Price: ${CFG.currency} ${currentProduct.price}\n\nPlease confirm availability and delivery charges.`;
             window.open(`https://wa.me/${CFG.wa}?text=${encodeURIComponent(msg)}`, '_blank');
             showToast('Opening WhatsApp...');
         }
