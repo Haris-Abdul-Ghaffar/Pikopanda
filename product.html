@@ -1,7 +1,269 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Product | PikoPanda</title><meta name="description" content="PikoPanda baby and kids clothing.">
-<link rel="icon" href="assets/mark.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css"></head>
-<body data-page="product"><main id="top"><section style="padding-top:36px"><div class="wrap" id="pd"></div></section></main><script src="assets/site.js"></script></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Product | PikoPanda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --color-primary: #2B2D33; --color-cta: #128C4A; --color-surface: #FAF8F5; --color-border: #E8E6E2; --container-max: 1240px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--color-primary); }
+        h1, h2, h3 { font-family: 'Baloo 2', cursive; }
+        .sku-font { font-family: 'IBM Plex Mono', monospace; }
+        
+        .header { background: white; box-shadow: 0 2px 8px rgba(43,45,51,0.06); padding: 15px 24px; position: sticky; top: 0; z-index: 100; }
+        .header-container { max-width: var(--container-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Baloo 2', cursive; font-size: 28px; font-weight: 700; text-decoration: none; color: var(--color-primary); }
+        
+        .product-container { max-width: var(--container-max); margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .product-gallery { position: sticky; top: 100px; }
+        .main-image { aspect-ratio: 4/5; background: var(--color-surface); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+        .main-image img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .product-category { font-size: 14px; color: #6B6F76; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .product-title { font-size: 32px; margin-bottom: 16px; line-height: 1.2; }
+        .product-price { font-size: 28px; font-weight: 700; color: var(--color-cta); margin-bottom: 20px; }
+        .product-price .original { font-size: 18px; color: #6B6F76; text-decoration: line-through; margin-left: 12px; }
+        
+        .sku-box { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
+        .sku-label { font-size: 12px; color: #6B6F76; text-transform: uppercase; }
+        .sku-value { font-size: 16px; font-weight: 600; }
+        .copy-sku { color: var(--color-cta); cursor: pointer; }
+        
+        .size-selector { margin-bottom: 24px; }
+        .size-label { font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .size-label a { color: var(--color-cta); font-size: 14px; }
+        .size-options { display: flex; gap: 12px; flex-wrap: wrap; }
+        .size-option { padding: 12px 20px; border: 2px solid var(--color-border); border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.18s; }
+        .size-option:hover { border-color: var(--color-cta); }
+        .size-option.selected { border-color: var(--color-cta); background: var(--color-cta); color: white; }
+        
+        .btn-wa-large { width: 100%; padding: 18px; background: var(--color-cta); color: white; border: none; border-radius: 30px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; transition: 0.18s; text-decoration: none; }
+        .btn-wa-large:hover { background: #0F7A3D; transform: translateY(-2px); }
+        .order-note { text-align: center; color: #6B6F76; font-size: 14px; margin-bottom: 32px; }
+        
+        .trust-badges { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+        .trust-badge { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #6B6F76; }
+        .trust-badge i { color: var(--color-cta); }
+        
+        .product-tabs { margin-top: 40px; }
+        .tabs-header { display: flex; gap: 32px; border-bottom: 2px solid var(--color-border); margin-bottom: 24px; }
+        .tab-btn { padding: 12px 0; background: none; border: none; font-family: inherit; font-size: 16px; font-weight: 600; color: #6B6F76; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .tab-btn.active { color: var(--color-cta); border-bottom-color: var(--color-cta); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-content p, .tab-content li { margin-bottom: 12px; line-height: 1.8; color: #4a4a4a; }
+        
+        .sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); padding: 16px 24px; display: none; z-index: 99; }
+        .sticky-bar.visible { display: block; }
+        .sticky-container { max-width: var(--container-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+        .sticky-price { font-size: 24px; font-weight: 700; color: var(--color-cta); }
+        .sticky-sku { font-size: 13px; color: #6B6F76; }
+        .sticky-btn { padding: 14px 32px; width: auto; margin: 0; }
+        
+        .floating-wa { position: fixed; bottom: 100px; right: 30px; z-index: 98; }
+        .floating-wa a { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+        
+        @media (max-width: 1024px) { .product-container { grid-template-columns: 1fr; } .product-gallery { position: relative; top: 0; } }
+        @media (max-width: 480px) { .product-title { font-size: 24px; } }
+        .toast { position: fixed; bottom: 180px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--color-primary); color: white; padding: 12px 24px; border-radius: 8px; opacity: 0; transition: 0.3s; z-index: 10000; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">PikoPanda 🐼</a>
+            <a href="shop.html" style="text-decoration:none;color:var(--color-cta);font-weight:600;"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+        </div>
+    </header>
+
+    <div class="product-container">
+        <div class="product-gallery">
+            <div class="main-image">
+                <img id="mainImage" src="" alt="">
+            </div>
+        </div>
+
+        <div class="product-details">
+            <div class="product-category" id="productCategory"></div>
+            <h1 class="product-title" id="productTitle"></h1>
+            <div class="product-price" id="productPrice"></div>
+            
+            <div class="sku-box">
+                <div>
+                    <div class="sku-label">Product Code (SKU)</div>
+                    <div class="sku-value" id="productSKU"></div>
+                </div>
+                <div class="copy-sku" onclick="copySKU()"><i class="far fa-copy"></i> Copy</div>
+            </div>
+            <p style="font-size:13px;color:#6B6F76;margin-bottom:24px;">Tip: Mention this SKU when you message us — it helps us find your exact outfit.</p>
+            
+            <div class="size-selector">
+                <div class="size-label">Select Size <a href="info.html" target="_blank"><i class="fas fa-ruler"></i> Size Guide</a></div>
+                <div class="size-options" id="sizeOptions"></div>
+            </div>
+            
+            <a href="#" class="btn-wa-large" id="waBtn" onclick="orderOnWhatsApp(event)">
+                <i class="fab fa-whatsapp"></i> Order on WhatsApp
+            </a>
+            <p class="order-note">No cart. No payment online. Just a quick chat.</p>
+            
+            <div class="trust-badges">
+                <div class="trust-badge"><i class="fas fa-truck"></i> 3-5 days delivery</div>
+                <div class="trust-badge"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</div>
+                <div class="trust-badge"><i class="fas fa-undo"></i> 7-day returns</div>
+            </div>
+            
+            <div class="product-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="switchTab('details', event)">Details & Care</button>
+                    <button class="tab-btn" onclick="switchTab('shipping', event)">Delivery & Returns</button>
+                    <button class="tab-btn" onclick="switchTab('howto', event)">How to Order</button>
+                </div>
+                
+                <div class="tab-content active" id="tab-details">
+                    <p id="productDescription"></p>
+                    <h3 style="margin:20px 0 12px;">Product Details</h3>
+                    <ul id="productDetails"></ul>
+                    <h3 style="margin:20px 0 12px;">Care Instructions</h3>
+                    <ul>
+                        <li>Machine wash cold with similar colours</li>
+                        <li>Do not bleach</li>
+                        <li>Line dry in shade</li>
+                        <li>Iron on low if needed</li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="tab-shipping">
+                    <h3>Delivery</h3>
+                    <p>We deliver across Pakistan. Most orders arrive within <strong>3-5 business days</strong> after confirmation.</p>
+                    <p>Delivery charges depend on your city and are confirmed with you on WhatsApp before your order is placed.</p>
+                    <h3 style="margin:20px 0 12px;">Returns & Exchanges</h3>
+                    <p>If something isn't right, message us on WhatsApp within 7 days of delivery and we'll help sort it out.</p>
+                    <p><strong>Note:</strong> Orders are fulfilled by our sourcing partner, Markaz, and their supplier network.</p>
+                </div>
+                
+                <div class="tab-content" id="tab-howto">
+                    <h3>Ordering in 3 Easy Steps</h3>
+                    <ol style="margin-left:20px;line-height:2;">
+                        <li><strong>Pick your favourite</strong> — Browse and note the SKU</li>
+                        <li><strong>Send us a WhatsApp</strong> — One tap pre-fills your order</li>
+                        <li><strong>We handle the rest</strong> — We confirm, pack and ship. Cash on delivery.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sticky-bar" id="stickyBar">
+        <div class="sticky-container">
+            <div>
+                <div class="sticky-price" id="stickyPrice"></div>
+                <div class="sticky-sku" id="stickySKU"></div>
+            </div>
+            <a href="#" class="btn-wa-large sticky-btn" onclick="orderOnWhatsApp(event)">
+                <i class="fab fa-whatsapp"></i> Order Now
+            </a>
+        </div>
+    </div>
+
+    <div class="floating-wa">
+        <a href="#" id="floatWa"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="assets/site.js"></script>
+    <script>
+        let currentProduct = null;
+        let selectedSize = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupWa();
+            const sku = new URLSearchParams(window.location.search).get('sku');
+            if (sku) loadProduct(sku);
+            window.addEventListener('scroll', handleScroll);
+        });
+
+        function setupWa() {
+            document.getElementById('floatWa').href = `https://wa.me/${CFG.wa}?text=${encodeURIComponent('Hi PikoPanda! 🐼 I have a question.')}`;
+        }
+
+        function loadProduct(sku) {
+            currentProduct = CFG.P.find(p => p.sku === sku);
+            if (!currentProduct) { window.location.href = 'shop.html'; return; }
+
+            document.getElementById('pageTitle').textContent = `${currentProduct.name} | PikoPanda`;
+            document.getElementById('productCategory').textContent = `${currentProduct.gender} · ${currentProduct.cat}`;
+            document.getElementById('productTitle').textContent = currentProduct.name;
+            document.getElementById('productSKU').textContent = currentProduct.sku;
+            document.getElementById('productDescription').textContent = currentProduct.desc || 'Premium quality clothing carefully selected for comfort and style.';
+            
+            let priceHTML = `${CFG.currency} ${currentProduct.price.toLocaleString()}`;
+            if (currentProduct.orig) priceHTML += ` <span class="original">${CFG.currency} ${currentProduct.orig.toLocaleString()}</span>`;
+            document.getElementById('productPrice').innerHTML = priceHTML;
+            document.getElementById('stickyPrice').textContent = `${CFG.currency} ${currentProduct.price.toLocaleString()}`;
+            document.getElementById('stickySKU').textContent = `SKU: ${currentProduct.sku}`;
+            
+            const detailsList = document.getElementById('productDetails');
+            if (currentProduct.details) {
+                detailsList.innerHTML = Object.entries(currentProduct.details).map(([k,v]) => `<li><strong>${k.charAt(0).toUpperCase()+k.slice(1)}:</strong> ${v}</li>`).join('');
+            } else {
+                detailsList.innerHTML = '<li>Premium quality fabric</li><li>Comfortable fit for active play</li>';
+            }
+            
+            const sizeContainer = document.getElementById('sizeOptions');
+            const sizes = currentProduct.sizes || ['2-3Y', '4-5Y', '6-7Y'];
+            sizeContainer.innerHTML = sizes.map(s => `<div class="size-option" onclick="selectSize('${s}', this)">${s}</div>`).join('');
+            
+            document.getElementById('mainImage').src = currentProduct.img;
+            document.getElementById('mainImage').alt = currentProduct.name;
+        }
+
+        function selectSize(size, el) {
+            document.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedSize = size;
+        }
+
+        function switchTab(tab, event) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+
+        function orderOnWhatsApp(event) {
+            event.preventDefault();
+            if (!currentProduct) return;
+            const size = selectedSize || 'I need help choosing';
+            const msg = `Hi PikoPanda! 🐼\n\nI'd like to order:\n🛍️ ${currentProduct.name}\n🏷️ SKU: ${currentProduct.sku}\n📏 Size: ${size}\n💰 Price: ${CFG.currency} ${currentProduct.price}\n\nPlease confirm availability and delivery charges.`;
+            window.open(`https://wa.me/${CFG.wa}?text=${encodeURIComponent(msg)}`, '_blank');
+            showToast('Opening WhatsApp...');
+        }
+
+        function copySKU() {
+            if (!currentProduct) return;
+            navigator.clipboard.writeText(currentProduct.sku);
+            showToast(`SKU copied: ${currentProduct.sku}`);
+        }
+
+        function handleScroll() {
+            const bar = document.getElementById('stickyBar');
+            if (window.scrollY > 600) bar.classList.add('visible');
+            else bar.classList.remove('visible');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>
