@@ -1,7 +1,231 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Shop | PikoPanda</title><meta name="description" content="Browse baby and kids clothing from PikoPanda.">
-<link rel="icon" href="assets/mark.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css"></head>
-<body data-page="shop"><main id="top"><div class="pagehead"><h1>Shop all pieces</h1><p>Search, filter and order on WhatsApp</p></div><section style="padding-top:36px"><div class="wrap"><div class="bar"><input id="q" type="search" placeholder="Search by name or SKU" aria-label="Search"><select id="max" aria-label="Price"><option value="">Any price</option><option value="1500">Under PKR 1,500</option><option value="2500">Under PKR 2,500</option></select><select id="sort" aria-label="Sort"><option value="">Featured</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option></select></div><div class="tabs" id="tabs" style="justify-content:flex-start"></div><p class="muted" id="count" style="margin:0 0 16px"></p><div class="grid" id="grid"></div></div></section></main><script src="assets/site.js"></script></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | PikoPanda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --color-primary: #2B2D33; --color-cta: #128C4A; --color-surface: #FAF8F5; --color-border: #E8E6E2; --radius-md: 12px; --container-max: 1240px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--color-primary); background: white; }
+        h1, h2, h3 { font-family: 'Baloo 2', cursive; }
+        a { text-decoration: none; color: inherit; }
+
+        .header { background: white; box-shadow: 0 2px 8px rgba(43,45,51,0.06); position: sticky; top: 0; z-index: 1000; }
+        .header-container { max-width: var(--container-max); margin: 0 auto; padding: 15px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-family: 'Baloo 2', cursive; font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #5A9B8E 0%, #E8836B 50%, #2B2D33 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-desktop { display: flex; gap: 32px; }
+        .nav-desktop a { font-weight: 600; font-size: 15px; }
+        .nav-desktop a:hover, .nav-desktop a.active { color: var(--color-cta); }
+
+        .page-header { background: var(--color-surface); padding: 40px 24px; text-align: center; }
+        .page-header h1 { font-size: 40px; margin-bottom: 12px; }
+        .page-header p { color: #6B6F76; font-size: 16px; }
+
+        .shop-container { max-width: var(--container-max); margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 280px 1fr; gap: 40px; }
+        .filters { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 24px; height: fit-content; position: sticky; top: 100px; }
+        .filter-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border); }
+        .filter-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .filter-title { font-weight: 700; margin-bottom: 12px; font-size: 16px; }
+        .filter-options { display: flex; flex-direction: column; gap: 8px; }
+        .filter-option { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .filter-option input { width: 18px; height: 18px; cursor: pointer; }
+        .filter-option label { cursor: pointer; font-size: 14px; }
+        .filter-count { color: #6B6F76; font-size: 13px; margin-left: auto; }
+        .btn-reset { width: 100%; padding: 10px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; font-weight: 600; margin-top: 16px; }
+        .btn-reset:hover { background: var(--color-border); }
+
+        .products-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .results-count { font-weight: 600; color: #6B6F76; }
+        .sort-select { padding: 10px 16px; border: 1px solid var(--color-border); border-radius: var(--radius-md); font-family: inherit; cursor: pointer; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .product-card { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; transition: 0.18s; position: relative; }
+        .product-card:hover { box-shadow: 0 8px 24px rgba(43,45,51,0.1); transform: translateY(-4px); }
+        .product-badge { position: absolute; top: 12px; left: 12px; background: var(--color-cta); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; z-index: 2; }
+        .product-image { position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--color-surface); }
+        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.18s; }
+        .product-card:hover .product-image img { transform: scale(1.05); }
+        .product-info { padding: 16px; }
+        .product-category { font-size: 12px; color: #6B6F76; text-transform: uppercase; margin-bottom: 4px; }
+        .product-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-price { font-size: 18px; font-weight: 700; color: var(--color-cta); margin-bottom: 8px; }
+        .product-price .original { font-size: 14px; color: #6B6F76; text-decoration: line-through; margin-left: 8px; font-weight: 400; }
+        .product-sku { font-family: monospace; font-size: 12px; color: #6B6F76; background: var(--color-surface); padding: 4px 8px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-order { width: 100%; margin-top: 12px; padding: 12px; background: var(--color-cta); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.18s; text-decoration: none; }
+        .btn-order:hover { background: #0F7A3D; }
+
+        .mobile-filter-btn { display: none; position: fixed; bottom: 100px; right: 20px; background: var(--color-cta); color: white; padding: 14px 20px; border-radius: 30px; font-weight: 600; z-index: 100; box-shadow: 0 4px 12px rgba(18,140,74,0.4); border: none; cursor: pointer; }
+        .floating-wa { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .floating-wa a { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+
+        @media (max-width: 1024px) {
+            .shop-container { grid-template-columns: 1fr; }
+            .filters { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 2000; background: white; padding: 20px; overflow-y: auto; }
+            .filters.active { display: block; }
+            .mobile-filter-btn { display: block; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-desktop { display: none; }
+        }
+        @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">PikoPanda 🐼</a>
+            <nav class="nav-desktop">
+                <a href="index.html">Home</a>
+                <a href="shop.html" class="active">Shop All</a>
+                <a href="shop.html?g=Boys">Boys</a>
+                <a href="shop.html?g=Girls">Girls</a>
+                <a href="info.html">Size Guide</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1>Shop all pieces</h1>
+        <p>Search, filter and order on WhatsApp</p>
+    </div>
+
+    <div class="shop-container">
+        <aside class="filters" id="filters">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="font-size: 20px;">Filters</h3>
+                <button onclick="closeFilters()" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="filter-section">
+                <div class="filter-title">Gender</div>
+                <div class="filter-options">
+                    <div class="filter-option"><input type="checkbox" id="f-Boys" value="Boys" onchange="applyFilters()"><label for="f-Boys">Boys</label><span class="filter-count" id="c-Boys"></span></div>
+                    <div class="filter-option"><input type="checkbox" id="f-Girls" value="Girls" onchange="applyFilters()"><label for="f-Girls">Girls</label><span class="filter-count" id="c-Girls"></span></div>
+                    <div class="filter-option"><input type="checkbox" id="f-Unisex" value="Unisex" onchange="applyFilters()"><label for="f-Unisex">Unisex</label><span class="filter-count" id="c-Unisex"></span></div>
+                    <div class="filter-option"><input type="checkbox" id="f-Infants" value="Infants" onchange="applyFilters()"><label for="f-Infants">Infants</label><span class="filter-count" id="c-Infants"></span></div>
+                </div>
+            </div>
+            <div class="filter-section">
+                <div class="filter-title">Category</div>
+                <div class="filter-options">
+                    <div class="filter-option"><input type="checkbox" id="c-Trk" value="Tracksuits" onchange="applyFilters()"><label for="c-Trk">Tracksuits</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Frk" value="Frocks" onchange="applyFilters()"><label for="c-Frk">Frocks & Dresses</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Krt" value="Kurtas" onchange="applyFilters()"><label for="c-Krt">Kurtas & Ethnic</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Nit" value="Sleepwear" onchange="applyFilters()"><label for="c-Nit">Sleepwear</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Win" value="Winter" onchange="applyFilters()"><label for="c-Win">Winter Wear</label></div>
+                </div>
+            </div>
+            <div class="filter-section">
+                <div class="filter-title">Price Range</div>
+                <div class="filter-options">
+                    <div class="filter-option"><input type="radio" name="price" id="p-all" value="all" checked onchange="applyFilters()"><label for="p-all">Any price</label></div>
+                    <div class="filter-option"><input type="radio" name="price" id="p-1500" value="1500" onchange="applyFilters()"><label for="p-1500">Under PKR 1,500</label></div>
+                    <div class="filter-option"><input type="radio" name="price" id="p-2500" value="2500" onchange="applyFilters()"><label for="p-2500">Under PKR 2,500</label></div>
+                </div>
+            </div>
+            <button class="btn-reset" onclick="resetFilters()">Reset All Filters</button>
+        </aside>
+
+        <div class="products-area">
+            <div class="products-toolbar">
+                <div class="results-count" id="resultsCount">Loading...</div>
+                <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                    <option value="newest">Featured</option>
+                    <option value="price-low">Price: low to high</option>
+                    <option value="price-high">Price: high to low</option>
+                </select>
+            </div>
+            <div class="product-grid" id="productGrid"></div>
+        </div>
+    </div>
+
+    <button class="mobile-filter-btn" onclick="openFilters()"><i class="fas fa-filter"></i> Filters</button>
+    <div class="floating-wa"><a href="#" id="floatWa"><i class="fab fa-whatsapp"></i></a></div>
+
+    <script src="assets/site.js"></script>
+    <script>
+        let filtered = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            setupWa();
+            applyFilters();
+            checkURL();
+        });
+
+        function setupWa() {
+            document.getElementById('floatWa').href = `https://wa.me/${CFG.wa}?text=${encodeURIComponent('Hi PikoPanda! 🐼 I have a question.')}`;
+        }
+
+        function checkURL() {
+            const p = new URLSearchParams(window.location.search);
+            if(p.get('g')) { const cb = document.getElementById(`f-${p.get('g')}`); if(cb) cb.checked = true; }
+            if(p.get('c')) { const cb = document.getElementById(`c-${p.get('c').substring(0,3)}`); if(cb) cb.checked = true; }
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const g = Array.from(document.querySelectorAll('.filter-section:first-child input:checked')).map(c => c.value);
+            const c = Array.from(document.querySelectorAll('.filter-section:nth-child(2) input:checked')).map(x => x.value);
+            const pr = document.querySelector('input[name="price"]:checked')?.value || 'all';
+            const q = new URLSearchParams(window.location.search).get('q')?.toLowerCase() || '';
+
+            filtered = CFG.P.filter(p => {
+                if(g.length && !g.includes(p.gender)) return false;
+                if(c.length && !c.some(x => p.cat.toLowerCase().includes(x.toLowerCase()))) return false;
+                if(pr !== 'all' && p.price > parseInt(pr)) return false;
+                if(q && !p.name.toLowerCase().includes(q) && !p.sku.toLowerCase().includes(q)) return false;
+                return true;
+            });
+
+            updateCounts();
+            render();
+        }
+
+        function updateCounts() {
+            ['Boys','Girls','Unisex','Infants'].forEach(x => {
+                const el = document.getElementById(`c-${x}`);
+                if(el) el.textContent = `(${CFG.P.filter(p => p.gender === x).length})`;
+            });
+            document.getElementById('resultsCount').textContent = `${filtered.length} piece${filtered.length !== 1 ? 's' : ''}`;
+        }
+
+        function render() {
+            const grid = document.getElementById('productGrid');
+            if(!filtered.length) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;"><h3>No products found</h3><p>Try adjusting your filters.</p></div>';
+                return;
+            }
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card">
+                    ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+                    <div class="product-image"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+                    <div class="product-info">
+                        <div class="product-category">${p.gender} · ${p.cat}</div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <div class="product-price">${CFG.currency} ${p.price.toLocaleString()}${p.orig ? `<span class="original">${CFG.currency} ${p.orig.toLocaleString()}</span>` : ''}</div>
+                        <div class="product-sku">SKU: ${p.sku}</div>
+                        <a href="product.html?sku=${p.sku}" class="btn-order"><i class="fas fa-eye"></i> View & Order</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function sortProducts() {
+            const s = document.getElementById('sortSelect').value;
+            if(s === 'price-low') filtered.sort((a,b) => a.price - b.price);
+            else if(s === 'price-high') filtered.sort((a,b) => b.price - a.price);
+            else filtered.sort((a,b) => a.id - b.id);
+            render();
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+            document.getElementById('p-all').checked = true;
+            applyFilters();
+        }
+        function openFilters() { document.getElementById('filters').classList.add('active'); }
+        function closeFilters() { document.getElementById('filters').classList.remove('active'); }
+    </script>
+</body>
+</html>
