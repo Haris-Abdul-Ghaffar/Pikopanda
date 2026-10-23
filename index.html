@@ -6,23 +6,17 @@
     <title>PikoPanda | Where comfort meets cuteness — Baby & Kids Clothing</title>
     <meta name="description" content="Premium baby and kids clothing in Pakistan. Soft, comfortable outfits. Order on WhatsApp - Cash on Delivery.">
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-container">
             <a href="index.html" class="logo">
-                <img src="assets/logo.jpg" alt="PikoPanda Logo" style="height: 50px; width: auto;">
+                <img src="assets/logo.jpg" alt="PikoPanda" style="height: 50px; width: auto;">
                 <span>PikoPanda 🐼</span>
             </a>
             <nav class="nav-desktop">
@@ -30,6 +24,7 @@
                 <a href="shop.html">Shop All</a>
                 <a href="shop.html?g=Boys">Boys</a>
                 <a href="shop.html?g=Girls">Girls</a>
+                <a href="shop.html?g=Infants">Infants</a>
                 <a href="info.html">Size Guide</a>
             </nav>
             <a href="#" class="btn-wa" id="headerWa">
@@ -38,25 +33,25 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <h1>Little clothes. <span>Big comfort.</span></h1>
-        <p>Soft, snuggly and adorable outfits for little ones, from newborns to big kids. Pick your favourite, tap once, and order on WhatsApp.</p>
-        <div class="hero-btns">
-            <a href="shop.html" class="btn-primary">
-                <i class="fas fa-shopping-bag"></i> Browse Collection
-            </a>
-            <a href="#" class="btn-secondary" id="heroWa">
-                <i class="fab fa-whatsapp"></i> Order on WhatsApp
-            </a>
+        <div class="hero-content">
+            <h1>Little clothes.<br><span>Big comfort.</span></h1>
+            <p>Soft, snuggly and adorable outfits for little ones, from newborns to big kids. Pick your favourite, tap once, and order on WhatsApp.</p>
+            <div class="hero-btns">
+                <a href="shop.html" class="btn-primary">
+                    <i class="fas fa-shopping-bag"></i> Browse Collection
+                </a>
+                <a href="#" class="btn-secondary" id="heroWa">
+                    <i class="fab fa-whatsapp"></i> Order on WhatsApp
+                </a>
+            </div>
         </div>
     </section>
 
-    <!-- Trust Badges -->
     <section class="trust-section">
         <div class="trust-container">
             <div class="trust-item">
-                <div class="trust-icon">🚚</div>
+                <div class="trust-icon"></div>
                 <div class="trust-text">
                     <h3>Cash on Delivery</h3>
                     <p>Pay when it arrives</p>
@@ -86,7 +81,6 @@
         </div>
     </section>
 
-    <!-- Categories -->
     <section class="section">
         <div class="section-header">
             <h2>Shop by little one</h2>
@@ -116,21 +110,17 @@
         </div>
     </section>
 
-    <!-- Featured Products -->
     <section class="section" style="background: var(--color-surface);">
         <div class="section-header">
             <h2>PikoPanda Picks</h2>
             <p>A taste of the collection. Open a piece to choose a size and order on WhatsApp.</p>
         </div>
-        <div class="product-grid" id="featuredProducts">
-            <!-- Products will load here from site.js -->
-        </div>
+        <div class="product-grid" id="featuredProducts"></div>
         <div style="text-align: center; margin-top: 40px;">
             <a href="shop.html" class="btn-primary">View all pieces →</a>
         </div>
     </section>
 
-    <!-- How It Works -->
     <section class="section">
         <div class="section-header">
             <h2>Ordering is easy</h2>
@@ -160,7 +150,6 @@
         </div>
     </section>
 
-    <!-- Features -->
     <section class="section" style="background: var(--color-surface);">
         <div class="section-header">
             <h2>Why parents love PikoPanda</h2>
@@ -172,29 +161,18 @@
                 <p>Pieces chosen for softness and easy wear, because little ones move all day.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🎀</div>
+                <div class="feature-icon"></div>
                 <h3>Cuteness, curated</h3>
                 <p>A small, carefully picked collection instead of an endless scroll.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🤝</div>
+                <div class="feature-icon"></div>
                 <h3>A real person replies</h3>
                 <p>Chat with us for sizing, colours and delivery. No bots, no pressure.</p>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section">
-        <div class="section-header">
-            <h2>Questions, answered</h2>
-        </div>
-        <div class="faq-container" id="faqContainer">
-            <!-- FAQ loads from JS -->
-        </div>
-    </section>
-
-    <!-- CTA Section -->
     <section class="cta-section">
         <h2>Ready to dress your little panda? 🐼</h2>
         <p>Say hello on WhatsApp. We'll help you pick the perfect piece.</p>
@@ -203,7 +181,6 @@
         </a>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-brand">
@@ -241,24 +218,21 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp -->
     <div class="floating-wa">
         <a href="#" id="floatingWa" aria-label="Chat on WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
 
-    <!-- JavaScript -->
     <script src="assets/site.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             setupWhatsAppLinks();
             renderFeaturedProducts();
-            renderFAQ();
         });
 
         function setupWhatsAppLinks() {
-            const msg = encodeURIComponent(`Hi PikoPanda!  I was browsing your website and I have a question.`);
+            const msg = encodeURIComponent('Hi PikoPanda!  I was browsing your website and I have a question.');
             const url = `https://wa.me/${CFG.wa}?text=${msg}`;
             document.querySelectorAll('#headerWa, #heroWa, #ctaWa, #floatingWa').forEach(el => el.href = url);
             document.getElementById('footerWa').textContent = `+${CFG.wa.substring(0,2)} ${CFG.wa.substring(2,5)} ${CFG.wa.substring(5,8)} ${CFG.wa.substring(8)}`;
@@ -286,22 +260,6 @@
                             <i class="fas fa-eye"></i> View & Order
                         </a>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        function renderFAQ() {
-            const faqs = [
-                { q: "Why is there no cart or checkout?", a: "We keep ordering personal. You message us on WhatsApp, we confirm everything with you, and nothing is charged online." },
-                { q: "How do I order?", a: "Choose a size, tap "Order on WhatsApp", and send the pre-filled message. We reply to confirm availability, price and delivery." },
-                { q: "What is a SKU?", a: "It's the product code shown on each card (for example PP-GRL-FLC-001). It helps us identify exactly the piece you want." },
-                { q: "Do I pay in advance?", a: "No. Orders are Cash on Delivery. You pay the courier when your parcel arrives." },
-                { q: "How do I choose the right size?", a: "Message us your child's age and height and we'll recommend a size. Sizes can vary slightly between pieces." }
-            ];
-            document.getElementById('faqContainer').innerHTML = faqs.map(f => `
-                <div class="faq-item" onclick="this.classList.toggle('active')">
-                    <div class="faq-q">${f.q} <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-a">${f.a}</div>
                 </div>
             `).join('');
         }
