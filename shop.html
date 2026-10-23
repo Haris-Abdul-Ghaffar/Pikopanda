@@ -14,7 +14,7 @@
         <div class="header-container">
             <a href="index.html" class="logo">
                 <img src="assets/logo.jpg" alt="PikoPanda" style="height: 50px;">
-                
+                <span>PikoPanda 🐼</span>
             </a>
             <nav class="nav-desktop">
                 <a href="index.html">Home</a>
@@ -37,6 +37,7 @@
                 <h3 style="font-size: 20px;">Filters</h3>
                 <button onclick="closeFilters()" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
             </div>
+            
             <div class="filter-section">
                 <div class="filter-title">Gender</div>
                 <div class="filter-options">
@@ -46,25 +47,30 @@
                     <div class="filter-option"><input type="checkbox" id="f-Infants" value="Infants" onchange="applyFilters()"><label for="f-Infants">Infants</label><span class="filter-count" id="c-Infants"></span></div>
                 </div>
             </div>
+            
             <div class="filter-section">
                 <div class="filter-title">Category</div>
                 <div class="filter-options">
                     <div class="filter-option"><input type="checkbox" id="c-Trk" value="Tracksuits" onchange="applyFilters()"><label for="c-Trk">Tracksuits</label></div>
-                    <div class="filter-option"><input type="checkbox" id="c-Set" value="Sets" onchange="applyFilters()"><label for="c-Set">Shirt & Trouser Sets</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Set" value="Shirt & Trouser Sets" onchange="applyFilters()"><label for="c-Set">Shirt & Trouser Sets</label></div>
                     <div class="filter-option"><input type="checkbox" id="c-Hod" value="Hoodies" onchange="applyFilters()"><label for="c-Hod">Hoodies</label></div>
                     <div class="filter-option"><input type="checkbox" id="c-Nit" value="Sleepwear" onchange="applyFilters()"><label for="c-Nit">Sleepwear</label></div>
-                    <div class="filter-option"><input type="checkbox" id="c-Krt" value="Kurtas" onchange="applyFilters()"><label for="c-Krt">Kurtas & Ethnic</label></div>
-                    <div class="filter-option"><input type="checkbox" id="c-Frk" value="Frocks" onchange="applyFilters()"><label for="c-Frk">Frocks & Dresses</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Krt" value="Kurtas & Ethnic" onchange="applyFilters()"><label for="c-Krt">Kurtas & Ethnic</label></div>
+                    <div class="filter-option"><input type="checkbox" id="c-Frk" value="Frocks & Dresses" onchange="applyFilters()"><label for="c-Frk">Frocks & Dresses</label></div>
                 </div>
             </div>
+            
             <div class="filter-section">
                 <div class="filter-title">Price Range</div>
                 <div class="filter-options">
                     <div class="filter-option"><input type="radio" name="price" id="p-all" value="all" checked onchange="applyFilters()"><label for="p-all">Any price</label></div>
+                    <div class="filter-option"><input type="radio" name="price" id="p-1000" value="1000" onchange="applyFilters()"><label for="p-1000">Under PKR 1,000</label></div>
                     <div class="filter-option"><input type="radio" name="price" id="p-1500" value="1500" onchange="applyFilters()"><label for="p-1500">Under PKR 1,500</label></div>
-                    <div class="filter-option"><input type="radio" name="price" id="p-2500" value="2500" onchange="applyFilters()"><label for="p-2500">Under PKR 2,500</label></div>
+                    <div class="filter-option"><input type="radio" name="price" id="p-2000" value="2000" onchange="applyFilters()"><label for="p-2000">Under PKR 2,000</label></div>
+                    <div class="filter-option"><input type="radio" name="price" id="p-3000" value="3000" onchange="applyFilters()"><label for="p-3000">Under PKR 3,000</label></div>
                 </div>
             </div>
+            
             <button class="btn-reset" onclick="resetFilters()">Reset All Filters</button>
         </aside>
 
@@ -87,6 +93,7 @@
     <script src="assets/site.js"></script>
     <script>
         let filtered = [];
+        
         document.addEventListener('DOMContentLoaded', () => {
             setupWa();
             applyFilters();
@@ -99,19 +106,38 @@
 
         function checkURL() {
             const p = new URLSearchParams(window.location.search);
-            if(p.get('g')) { const cb = document.getElementById(`f-${p.get('g')}`); if(cb) cb.checked = true; }
+            if(p.get('g')) { 
+                const cb = document.getElementById(`f-${p.get('g')}`); 
+                if(cb) cb.checked = true; 
+            }
             applyFilters();
         }
 
         function applyFilters() {
-            const g = Array.from(document.querySelectorAll('.filter-section:first-child input:checked')).map(c => c.value);
-            const c = Array.from(document.querySelectorAll('.filter-section:nth-child(2) input:checked')).map(x => x.value);
-            const pr = document.querySelector('input[name="price"]:checked')?.value || 'all';
+            // Get all checked gender filters
+            const genderFilters = Array.from(document.querySelectorAll('#f-Boys, #f-Girls, #f-Unisex, #f-Infants'))
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            
+            // Get all checked category filters
+            const categoryFilters = Array.from(document.querySelectorAll('#c-Trk, #c-Set, #c-Hod, #c-Nit, #c-Krt, #c-Frk'))
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            
+            // Get price filter
+            const priceFilter = document.querySelector('input[name="price"]:checked')?.value || 'all';
 
+            // Filter products
             filtered = CFG.P.filter(p => {
-                if(g.length && !g.includes(p.gender)) return false;
-                if(c.length && !c.some(x => p.cat.toLowerCase().includes(x.toLowerCase()))) return false;
-                if(pr !== 'all' && p.price > parseInt(pr)) return false;
+                // Gender filter
+                if(genderFilters.length > 0 && !genderFilters.includes(p.gender)) return false;
+                
+                // Category filter - EXACT MATCH
+                if(categoryFilters.length > 0 && !categoryFilters.includes(p.cat)) return false;
+                
+                // Price filter
+                if(priceFilter !== 'all' && p.price > parseInt(priceFilter)) return false;
+                
                 return true;
             });
 
@@ -120,27 +146,35 @@
         }
 
         function updateCounts() {
-            ['Boys','Girls','Unisex','Infants'].forEach(x => {
-                const el = document.getElementById(`c-${x}`);
-                if(el) el.textContent = `(${CFG.P.filter(p => p.gender === x).length})`;
+            // Update gender counts
+            ['Boys','Girls','Unisex','Infants'].forEach(g => {
+                const el = document.getElementById(`c-${g}`);
+                if(el) el.textContent = `(${CFG.P.filter(p => p.gender === g).length})`;
             });
+            
+            // Update results count
             document.getElementById('resultsCount').textContent = `${filtered.length} piece${filtered.length !== 1 ? 's' : ''}`;
         }
 
         function render() {
             const grid = document.getElementById('productGrid');
-            if(!filtered.length) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;"><h3>No products found</h3><p>Try adjusting your filters.</p></div>';
+            
+            if(filtered.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;"><h3>No products found</h3><p>Try adjusting your filters or <a href="#" onclick="resetFilters(); return false;">clear all filters</a></p></div>';
                 return;
             }
+            
             grid.innerHTML = filtered.map(p => `
                 <div class="product-card">
                     ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
                     <div class="product-image"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
                     <div class="product-info">
-                        <div class="product-category">${p.gender} · ${p.cat}</div>
+                        <div class="product-category">${p.gender.toUpperCase()} · ${p.cat.toUpperCase()}</div>
                         <h3 class="product-title">${p.name}</h3>
-                        <div class="product-price">${CFG.currency} ${p.price.toLocaleString()}${p.orig ? `<span class="original">${CFG.currency} ${p.orig.toLocaleString()}</span>` : ''}</div>
+                        <div class="product-price">
+                            ${CFG.currency} ${p.price.toLocaleString()}
+                            ${p.orig ? `<span class="original">${CFG.currency} ${p.orig.toLocaleString()}</span>` : ''}
+                        </div>
                         <div class="product-sku">SKU: ${p.sku}</div>
                         <a href="product.html?sku=${p.sku}" class="btn-order"><i class="fas fa-eye"></i> View & Order</a>
                     </div>
@@ -161,8 +195,14 @@
             document.getElementById('p-all').checked = true;
             applyFilters();
         }
-        function openFilters() { document.getElementById('filters').classList.add('active'); }
-        function closeFilters() { document.getElementById('filters').classList.remove('active'); }
+        
+        function openFilters() { 
+            document.getElementById('filters').classList.add('active'); 
+        }
+        
+        function closeFilters() { 
+            document.getElementById('filters').classList.remove('active'); 
+        }
     </script>
 </body>
 </html>
