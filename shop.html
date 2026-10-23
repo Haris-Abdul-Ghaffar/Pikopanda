@@ -8,12 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
-   
 </head>
 <body>
     <header class="header">
         <div class="header-container">
-            <a href="index.html" class="logo">PikoPanda 🐼</a>
+            <a href="index.html" class="logo">
+                <img src="assets/logo.jpg" alt="PikoPanda" style="height: 50px;">
+                <span>PikoPanda 🐼</span>
+            </a>
             <nav class="nav-desktop">
                 <a href="index.html">Home</a>
                 <a href="shop.html" class="active">Shop All</a>
@@ -33,7 +35,7 @@
         <aside class="filters" id="filters">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3 style="font-size: 20px;">Filters</h3>
-                <button onclick="closeFilters()" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                <button onclick="closeFilters()" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
             </div>
             <div class="filter-section">
                 <div class="filter-title">Gender</div>
@@ -51,7 +53,6 @@
                     <div class="filter-option"><input type="checkbox" id="c-Frk" value="Frocks" onchange="applyFilters()"><label for="c-Frk">Frocks & Dresses</label></div>
                     <div class="filter-option"><input type="checkbox" id="c-Krt" value="Kurtas" onchange="applyFilters()"><label for="c-Krt">Kurtas & Ethnic</label></div>
                     <div class="filter-option"><input type="checkbox" id="c-Nit" value="Sleepwear" onchange="applyFilters()"><label for="c-Nit">Sleepwear</label></div>
-                    <div class="filter-option"><input type="checkbox" id="c-Win" value="Winter" onchange="applyFilters()"><label for="c-Win">Winter Wear</label></div>
                 </div>
             </div>
             <div class="filter-section">
@@ -97,7 +98,6 @@
         function checkURL() {
             const p = new URLSearchParams(window.location.search);
             if(p.get('g')) { const cb = document.getElementById(`f-${p.get('g')}`); if(cb) cb.checked = true; }
-            if(p.get('c')) { const cb = document.getElementById(`c-${p.get('c').substring(0,3)}`); if(cb) cb.checked = true; }
             applyFilters();
         }
 
@@ -105,13 +105,11 @@
             const g = Array.from(document.querySelectorAll('.filter-section:first-child input:checked')).map(c => c.value);
             const c = Array.from(document.querySelectorAll('.filter-section:nth-child(2) input:checked')).map(x => x.value);
             const pr = document.querySelector('input[name="price"]:checked')?.value || 'all';
-            const q = new URLSearchParams(window.location.search).get('q')?.toLowerCase() || '';
 
             filtered = CFG.P.filter(p => {
                 if(g.length && !g.includes(p.gender)) return false;
                 if(c.length && !c.some(x => p.cat.toLowerCase().includes(x.toLowerCase()))) return false;
                 if(pr !== 'all' && p.price > parseInt(pr)) return false;
-                if(q && !p.name.toLowerCase().includes(q) && !p.sku.toLowerCase().includes(q)) return false;
                 return true;
             });
 
