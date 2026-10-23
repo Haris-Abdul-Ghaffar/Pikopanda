@@ -1,13 +1,140 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sizing, Shipping & Policies | PikoPanda</title><meta name="description" content="Sizing, shipping, returns, privacy and terms for PikoPanda.">
-<link rel="icon" href="assets/mark.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css"></head>
-<body data-page="info"><main id="top"><div class="pagehead"><h1>Good to know</h1><p>Sizing, shipping, returns and policies</p></div><section style="padding-top:36px"><div class="wrap prose">
-<h2 id="sizing">Sizing</h2><p>Sizes can vary slightly between pieces. Message us your child's age and height on WhatsApp and we'll recommend the best size before you order.</p>
-<h2 id="shipping">Shipping &amp; delivery</h2><p>We deliver across Pakistan. Delivery charges and timing depend on your city and are confirmed with you on WhatsApp before your order is placed. Payment is Cash on Delivery, so you pay when your parcel arrives.</p>
-<h2 id="returns">Returns &amp; exchanges</h2><p>If something isn't right, message us on WhatsApp as soon as you receive your parcel and we'll help sort it out. Please ask us for the exact return and exchange terms for your order before confirming it.</p>
-<h2 id="privacy">Privacy</h2><p>This website doesn't take payments, create accounts or collect personal details. When you tap an order button, a message opens in WhatsApp and is sent only if you choose to send it. Anything you share there is handled in WhatsApp and used only to process your order.</p>
-<h2 id="terms">Terms</h2><p>This website is a catalogue. Browsing it or opening WhatsApp doesn't place an order: an order is only accepted when we confirm availability and price with you in chat. Prices are in PKR, delivery is charged separately, and colours may look slightly different on different screens.</p>
-</div></section></main><script src="assets/site.js"></script></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sizing, Shipping & Policies | PikoPanda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --color-primary: #2B2D33; --color-cta: #128C4A; --color-surface: #FAF8F5; --color-border: #E8E6E2; --container-max: 1240px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--color-primary); background: white; line-height: 1.8; }
+        h1, h2, h3 { font-family: 'Baloo 2', cursive; }
+        a { text-decoration: none; color: inherit; }
+
+        .header { background: white; box-shadow: 0 2px 8px rgba(43,45,51,0.06); padding: 15px 24px; position: sticky; top: 0; z-index: 100; }
+        .header-container { max-width: var(--container-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Baloo 2', cursive; font-size: 28px; font-weight: 700; text-decoration: none; color: var(--color-primary); }
+
+        .info-container { max-width: 800px; margin: 0 auto; padding: 60px 24px; }
+        .info-container h1 { font-size: 36px; margin-bottom: 12px; }
+        .info-container > p { color: #6B6F76; margin-bottom: 40px; font-size: 18px; }
+        
+        .info-section { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--color-border); }
+        .info-section:last-child { border-bottom: none; }
+        .info-section h2 { font-size: 24px; margin-bottom: 16px; color: var(--color-cta); }
+        .info-section p, .info-section li { margin-bottom: 12px; color: #4a4a4a; }
+        .info-section ul { margin-left: 20px; }
+
+        .wa-box { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; text-align: center; margin-top: 40px; }
+        .wa-box h3 { margin-bottom: 12px; }
+        .btn-wa { display: inline-flex; align-items: center; gap: 8px; background: var(--color-cta); color: white; padding: 14px 28px; border-radius: 30px; font-weight: 600; margin-top: 16px; transition: 0.18s; }
+        .btn-wa:hover { background: #0F7A3D; }
+
+        .floating-wa { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .floating-wa a { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">PikoPanda 🐼</a>
+            <a href="index.html" style="color:var(--color-cta);font-weight:600;">Back to Home</a>
+        </div>
+    </header>
+
+    <div class="info-container">
+        <h1>Good to know</h1>
+        <p>Sizing, shipping, returns and policies</p>
+
+        <div class="info-section">
+            <h2>📏 Sizing</h2>
+            <p>Sizes can vary slightly between pieces and suppliers. Message us your child's age and height on WhatsApp and we'll recommend the best size before you order. When in doubt, we usually suggest sizing up for a longer fit.</p>
+            <ul>
+                <li><strong>Infants (0-24M):</strong> Measured by months. Allow room for growth.</li>
+                <li><strong>Kids (2-12Y):</strong> Measured by age. Check height if your child is tall for their age.</li>
+           6B6F76; margin-bottom: 12px; }
+        .info-section ul { margin-left: 20px; }
+
+        .wa-box { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px; text-align: center; margin-top: 40px; }
+        .wa-box h3 { margin-bottom: 12px; }
+        .btn-wa { display: inline-flex; align-items: center; gap: 8px; background: var(--color-cta); color: white; padding: 14px 28px; border-radius: 30px; font-weight: 600; margin-top: 16px; transition: 0.18s; }
+        .btn-wa:hover { background: #0F7A3D; }
+
+        .floating-wa { position: fixed; bottom: 30px; right: 30px; z-index: 999; }
+        .floating-wa a { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">PikoPanda 🐼</a>
+            <a href="index.html" style="color:var(--color-cta);font-weight:600;">Back to Home</a>
+        </div>
+    </header>
+
+    <div class="info-container">
+        <h1>Good to know</h1>
+        <p>Sizing, shipping, returns and policies</p>
+
+        <div class="info-section">
+            <h2>📏 Sizing</h2>
+            <p>Sizes can vary slightly between pieces and suppliers. Message us your child's age and height on WhatsApp and we'll recommend the best size before you order. When in doubt, we usually suggest sizing up for a longer fit.</p>
+            <ul>
+                <li><strong>Infants (0-24M):</strong> Measured by months. Allow room for growth.</li>
+                <li><strong>Kids (2-12Y):</strong> Measured by age. Check height if your child is tall for their age.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>🚚 Shipping & delivery</h2>
+            <p>We deliver across Pakistan. Delivery charges and timing depend on your city and are confirmed with you on WhatsApp before your order is placed. Payment is Cash on Delivery, so you pay when your parcel arrives.</p>
+            <ul>
+                <li><strong>Major cities:</strong> 2-3 business days</li>
+                <li><strong>Other cities:</strong> 3-5 business days</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>🔄 Returns & exchanges</h2>
+            <p>If something isn't right, message us on WhatsApp as soon as you receive your parcel and we'll help sort it out. Please ask us for the exact return and exchange terms for your order before confirming it.</p>
+            <ul>
+                <li>Items must be unworn, unwashed, and with original tags.</li>
+                <li>Requests must be made within 7 days of delivery.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>🔒 Privacy</h2>
+            <p>This website doesn't take payments, create accounts or collect personal details. When you tap an order button, a message opens in WhatsApp and is sent only if you choose to send it. Anything you share there is handled in WhatsApp and used only to process your order.</p>
+        </div>
+
+        <div class="info-section">
+            <h2>📜 Terms</h2>
+            <p>This website is a catalogue. Browsing it or opening WhatsApp doesn't place an order: an order is only accepted when we confirm availability and price with you in chat. Prices are in PKR, delivery is charged separately, and colours may look slightly different on different screens.</p>
+        </div>
+
+        <div class="wa-box">
+            <h3>Still have questions?</h3>
+            <p>We're here to help! Send us a message and a real person will reply.</p>
+            <a href="#" class="btn-wa" id="infoWa"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+        </div>
+    </div>
+
+    <div class="floating-wa">
+        <a href="#" id="floatWa"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <script src="assets/site.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const msg = encodeURIComponent('Hi PikoPanda! 🐼 I have a question about sizing/shipping.');
+            const url = `https://wa.me/${CFG.wa}?text=${msg}`;
+            document.getElementById('infoWa').href = url;
+            document.getElementById('floatWa').href = url;
+        });
+    </script>
+</body>
+</html>
